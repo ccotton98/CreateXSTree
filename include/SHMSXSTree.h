@@ -86,13 +86,16 @@ private:
     //kin
     float  nu,Q2,W,xbj;
     //rate
-    float p_rate_he3, p_rate_ge180,p_rate_c12, p_spec, p_accept, th_accept, ph_accept, dens_he3, dens_ge180,dens_c12, tar_len_ge180, tar_len_he3,tar_len_c12, n_trials;
+    float p_rate_4he, p_rate_2h, p_yield_4he, p_yield_2h;
+    float p_rate_4he_pi, p_yield_4he_pi;
+    float tar_len_4he, tar_len_2h, dens_4he, dens_2h;
+    float p_spec, p_accept, th_accept, ph_accept, n_trials;
 
     //-----------------------------block3 end  -------------------------
 
     //-----------------------------block2 start  -----------------------
     //this block will not be filled if mTreeLevel>=2
-    float  xs_1h,xs_3he,xs_4he,xs_12c,xs_14n,xs_27al,xs_ge180; 
+    float  xs_1h,xs_3he,xs_4he,xs_12c,xs_14n,xs_27al,xs_ge180, xs_4he_pi; 
     //-----------------------------block2 end  -------------------------
     
     //-----------------------------block1 start  -----------------------

@@ -87,7 +87,7 @@ private:
     float  nu,Q2,W,xbj;
     //rate
 
-    float p_rate_he3, p_rate_ge180, p_rate_c12, p_spec, p_accept, th_accept, ph_accept, dens_he3, dens_ge180, dens_c12, tar_len_ge180, tar_len_he3, tar_len_c12, n_trials;
+    float p_rate_he4, p_yield_he4, p_spec, p_accept, th_accept, ph_accept, dens_he4, tar_len_he4, n_trials, p_rate_h2, p_yield_h2, tar_len_h2, dens_h2;
 
     //-----------------------------block3 end  -------------------------
 

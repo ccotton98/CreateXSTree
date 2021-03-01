@@ -96,9 +96,8 @@ void HMSXSTree::BeginOfRun()
       mTree->Branch("xs_14n",&xs_14n,"xs_14n/F");
       mTree->Branch("xs_27al",&xs_27al,"xs_27al/F");
       mTree->Branch("xs_ge180",&xs_ge180,"xs_ge180/F");
-      mTree->Branch("p_rate_he3",&p_rate_he3,"p_rate_he3/F");
-      mTree->Branch("p_rate_ge180",&p_rate_ge180,"p_rate_ge180/F");
-      mTree->Branch("p_rate_c12",&p_rate_he3,"p_rate_c12/F");
+      mTree->Branch("p_rate_he4",&p_rate_he4,"p_rate_he4/F");
+      mTree->Branch("p_yield_he4",&p_yield_he4,"p_yield_he4/F");
     }
   //the above will not be filled if mTreeLevel>=2 /////////////////////
 
@@ -237,20 +236,20 @@ void HMSXSTree::Run(int nevents_to_process)
       xs_27al = GetXS(13,14,mBeam,p0,theta0,0.0,0.0);
       xs_ge180 = GetXS_GE180(mBeam,p0,theta0,0.0,0.0);
       //rate
-      p_accept = (15.0+abs(-15.0))/100.0; 
-      th_accept = (70.0+abs(-70.0))/1000.0;
-      ph_accept = (100.0+abs(-100.0))/1000.0;
-      n_trials=1000000.0;
-      tar_len_ge180=0.015;
-      tar_len_he3=40.0;
-      tar_len_c12=0.0254;
-      p_spec=mDetMom;
-      dens_ge180=2.02e28;
-      dens_he3=12.0*2.686e25;
-      dens_c12=1.6532e28;
-      p_rate_he3=GetXS(2,1,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_he3*1e-37*30e-6*tar_len_he3/100.0/(1.6*1e-19*n_trials);
-      p_rate_ge180=GetXS_GE180(mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_ge180*1e-37*30e-6*tar_len_ge180/100.0/(1.6*1e-19*n_trials);
-      p_rate_c12=GetXS(6,6,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_c12*1e-37*30e-6*tar_len_c12/100.0/(1.6*1e-19*n_trials);
+      // The values below should not be hardcoded in the future. These values are selected when making the input file into mc-single-arm.
+      p_accept = (15.0+abs(-15.0))/100.0; // percent
+      th_accept = (30.0+abs(-30.0))/1000.0; // Rad
+      ph_accept = (100.0+abs(-100.0))/1000.0; // Rad
+      n_trials=100000.0;
+      tar_len_he4=10.0; // in cm
+      tar_len_h2=10.0;
+      p_spec=mDetMom; // in GeV
+      dens_he4=2.41e28; // in number per m^3, using a density of 0.16 g/cm^3
+      dens_h2=5.03e28;
+      p_rate_h2=GetXS(1,1,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_h2*1e-34*40e-6*tar_len_h2/100/(1.6*1e-19*n_trials);
+      p_rate_he4=GetXS(2,2,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_he4*1e-34*60e-6*tar_len_he4/100.0/(1.6*1e-19*n_trials);
+      p_yield_h2=p_rate_h2/(40e-6);
+      p_yield_he4=p_rate_he4/(60e-6);
     }
         
     //fill the tree
@@ -296,7 +295,7 @@ void HMSXSTree::Reset()
   nu=Q2=W=xbj=-9999.0;
 
   //this block will not be filled if mTreeLevel>=2
-  xs_1h=xs_3he=xs_4he=xs_12c=xs_14n=xs_27al=xs_ge180=p_rate_he3=p_rate_ge180=p_rate_c12=-9999.0; 
+  xs_1h=xs_3he=xs_4he=xs_12c=xs_14n=xs_27al=xs_ge180=p_rate_he4=p_yield_he4=p_rate_h2=p_yield_h2=-9999.0; 
   
 }
 

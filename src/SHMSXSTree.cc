@@ -96,9 +96,13 @@ void SHMSXSTree::BeginOfRun()
       mTree->Branch("xs_14n",&xs_14n,"xs_14n/F");
       mTree->Branch("xs_27al",&xs_27al,"xs_27al/F");
       mTree->Branch("xs_ge180",&xs_ge180,"xs_ge180/F");
-      mTree->Branch("p_rate_he3",&p_rate_he3,"p_rate_he3/F");
-      mTree->Branch("p_rate_ge180",&p_rate_ge180,"p_rate_ge180/F");
-      mTree->Branch("p_rate_c12",&p_rate_c12,"p_rate_c12/F");
+      mTree->Branch("xs_4he_pi",&xs_4he_pi,"xs_4he_pi/F");
+      mTree->Branch("p_rate_4he_pi",&p_rate_4he_pi,"p_rate_4he_pi/F");
+      mTree->Branch("p_yield_4he_pi",&p_yield_4he_pi,"p_yield_4he_pi/F");
+      mTree->Branch("p_rate_4he",&p_rate_4he,"p_rate_4he/F");
+      mTree->Branch("p_rate_2h",&p_rate_2h,"p_rate_2h/F");
+      mTree->Branch("p_yield_4he",&p_yield_4he,"p_yield_4he/F");
+      mTree->Branch("p_yield_2h",&p_yield_2h,"p_yield_2h/F");
     }
   //the above will not be filled if mTreeLevel>=2 /////////////////////
 
@@ -236,21 +240,25 @@ void SHMSXSTree::Run(int nevents_to_process)
       xs_14n = GetXS(7,7,mBeam,p0,theta0,0.0,0.0);
       xs_27al = GetXS(13,14,mBeam,p0,theta0,0.0,0.0);
       xs_ge180 = GetXS_GE180(mBeam,p0,theta0,0.0,0.0);
+      xs_4he_pi = WISER::GetXS(-211,2,2,mBeam,p0,theta0,0.067); //first have cross section per nucleon in mb/GeV/Sr
+      xs_4he_pi *= (1000.0); //convert to ub/GeV/Sr
+      xs_4he_pi *= 3.03; //convert to cross section per nuclei (A**0.8), A = 4
       //rate
-      p_accept = (30.0+abs(-20.0))/100.0; 
+      p_accept = (30.0+abs(-15.0))/100.0; 
       th_accept = (55.0+abs(-55.0))/1000.0;
       ph_accept = (50.0+abs(-50.0))/1000.0;
-      n_trials=1000000.0;
-      tar_len_ge180=0.015;
-      tar_len_he3=40.0;
-      tar_len_c12=0.0254;
-      p_spec=mDetMom;
-      dens_ge180=2.02e28;
-      dens_c12=1.6532e28;
-      dens_he3=12.0*2.686e25;
-      p_rate_he3=GetXS(2,1,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_he3*1e-37*30e-6*tar_len_he3/100.0/(1.6*1e-19*n_trials);
-      p_rate_ge180=GetXS_GE180(mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_ge180*1e-37*30e-6*tar_len_ge180/100.0/(1.6*1e-19*n_trials);
-      p_rate_c12=GetXS(6,6,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_c12*1e-37*30e-6*tar_len_c12/100.0/(1.6*1e-19*n_trials);
+      n_trials=100000.0;
+      tar_len_4he=10.0; // in cm
+      tar_len_2h=10.0;
+      p_spec=mDetMom; // in GeV
+      dens_4he=2.41e28; // in number per m^3, using a density of 0.16 g/cm^3
+      dens_2h=5.03e28;
+      p_rate_2h=GetXS(1,1,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_2h*1e-34*40e-6*tar_len_2h/100/(1.6*1e-19*n_trials);
+      p_rate_4he=GetXS(2,2,mBeam,p0,theta0,0.0,0.0)*p_spec*p_accept*th_accept*ph_accept*dens_4he*1e-34*60e-6*tar_len_4he/100.0/(1.6*1e-19*n_trials);
+      p_rate_4he_pi=xs_4he_pi*p_spec*p_accept*th_accept*ph_accept*dens_4he*1e-34*60e-6*tar_len_4he/100.0/(1.6*1e-19*n_trials);
+      p_yield_2h=p_rate_2h/(40e-6);
+      p_yield_4he=p_rate_4he/(60e-6);
+      p_yield_4he_pi=p_rate_4he_pi/(60e-6);
     }
 
     //fill the tree
@@ -296,7 +304,7 @@ void SHMSXSTree::Reset()
   nu=Q2=W=xbj=-9999.0;
 
   //this block will not be filled if mTreeLevel>=2
-  xs_1h=xs_3he=xs_4he=xs_12c=xs_14n=xs_27al=xs_ge180=p_rate_he3=p_rate_ge180=p_rate_c12=-9999.0; 
+  xs_1h=xs_3he=xs_4he=xs_12c=xs_14n=xs_27al=xs_ge180=xs_4he_pi=p_rate_4he=p_yield_4he=p_rate_2h=p_yield_2h=-9999.0; 
   
 }
 
@@ -327,7 +335,6 @@ double SHMSXSTree::GetXS(int Z, int N, float Ei, float Ef, float Theta, float Tb
   }
   return pXs;
 }
-
 
 //XS for GE180 compound
 double SHMSXSTree::GetXS_GE180(float Ei, float Ef, float Theta, float Tb, float Ta)
