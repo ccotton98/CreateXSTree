@@ -12,7 +12,7 @@ double xs_vs_theta(double *x, double *par)
   double E0=par[2];
   double Ef=par[3];
   double xs=0.0;
-  if(E0>Ef) xs = PBosted::GetXS(Z,N,E0,Ef,Theta);
+  if(E0>Ef) xs = XEM::GetXS(Z,N,E0,Ef,Theta);
   //if(isnan(xs)) xs=0.0;
   
   return xs;
@@ -28,7 +28,7 @@ double xs_vs_p(double *x, double *par)
   double E0=par[2];
   double Theta=par[3]*deg;
   double xs=0.0;
-  if(E0>Ef) xs = PBosted::GetXS(Z,N,E0,Ef,Theta);
+  if(E0>Ef) xs = XEM::GetXS(Z,N,E0,Ef,Theta);
   //if(isnan(xs)) xs=0.0;
   
   return xs;
