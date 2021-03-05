@@ -296,12 +296,12 @@ double XSTree::GetXS(int Z, int N, float Ei, float Ef, float Theta, float Tb, fl
     }
     pXs *= 1.0;   //already in ub/Sr
   } else {
-    //note that PBosted::GetXS() will not work for Q2>11, I give up these points
-    if(Q2 < 11.0) pXs = PBosted::GetXS(Z, N, (double)Ei, (double)Ef, (double)Theta, (double)Tb, (double)Ta);
+    //note that XEM::GetXS() will not work for Q2>11, I give up these points
+    if(Q2 < 11.0) pXs = XEM::GetXS(Z, N, (double)Ei, (double)Ef, (double)Theta, (double)Tb, (double)Ta);
     if(isnanf(pXs)) {
       pXs=0.0;
 #ifdef XSTree_Debug 
-      cout<<" isnan  from PBosted::GetXS(Z="<<Z<<", N="<<N<<", Ei="<<Ei<<", Ef="<<Ef<<", Theta="<<Theta<<", Tb="<<Tb<<", Ta="<<Ta<<")\n";
+      cout<<" isnan  from XEM::GetXS(Z="<<Z<<", N="<<N<<", Ei="<<Ei<<", Ef="<<Ef<<", Theta="<<Theta<<", Tb="<<Tb<<", Ta="<<Ta<<")\n";
       //char cc[100];cout<<"\nPress any key to continue ...";cin>>cc;
 #endif
     }

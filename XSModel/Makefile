@@ -20,7 +20,7 @@ INCDIR      := .
 OBJDIR      := obj.$(ARCH)
 
 ########################################################################
-MODELDIR    := Bosted Elas QFS_N_EPC Wiser Compton
+MODELDIR    := XEM Bosted Elas QFS_N_EPC Wiser Compton
 INCDIR      := $(INCDIR):$(MODELDIR)
 
 ########################################################################

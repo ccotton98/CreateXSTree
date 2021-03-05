@@ -1,0 +1,4 @@
+[submodule "XSModel/XEM"]
+	path = XSModel/XEM
+	url = git@github.com:mrcmor100/XEM_model.git
+	branch = CreateXSTree

@@ -108,12 +108,12 @@ double GetXS(int Z, int N, float Ei, float Ef, float Theta, float Tb, float Ta, 
     }
     pXs *= 1.0;   //already in ub/Sr
   } else {
-    //note that PBosted::GetXS() will not work for Q2>11, I give up these points
-    pXs = PBosted::GetXS(Z, N, (double)Ei, (double)Ef, (double)Theta, (double)Tb, (double)Ta);
+    //note that XEM::GetXS() will not work for Q2>11, I give up these points
+    pXs = XEM::GetXS(Z, N, (double)Ei, (double)Ef, (double)Theta, (double)Tb, (double)Ta);
     if(isnanf(pXs)) {
       pXs=0.0;
 #ifdef DEBUG 
-      if(DEBUG>=4) cout<<" isnan  from PBosted::GetXS(Z="<<Z<<", N="<<N<<", Ei="<<Ei<<", Ef="<<Ef<<", Theta="<<Theta<<", Tb="<<Tb<<", Ta="<<Ta<<")\n";
+      if(DEBUG>=4) cout<<" isnan  from XEM::GetXS(Z="<<Z<<", N="<<N<<", Ei="<<Ei<<", Ef="<<Ef<<", Theta="<<Theta<<", Tb="<<Tb<<", Ta="<<Ta<<")\n";
       //char cc[100];cout<<"\nPress any key to continue ...";cin>>cc;
 #endif
     }
@@ -442,7 +442,7 @@ double GetInteXS(double pBeamE, double pAngle, double pMomentum, double Z, int N
         if(ElasOnly!=1 && ElasOnly!=31) {
           pXs = 0.0;
           if(pQ2 < 11.0) pXs = GetXS(Z, N, pBeamE, pEprime, pTheta, Tb, Ta, 0);
-          if(DEBUG>=4) cout<<" Xbj = "<< pXbj<<"  Q2 = "<<pQ2<<"  PBosted::GetXS() = "<<pXs*1.0E3<<" (nb/GeV/Sr)"<<endl;
+          if(DEBUG>=4) cout<<" Xbj = "<< pXbj<<"  Q2 = "<<pQ2<<"  XEM::GetXS() = "<<pXs*1.0E3<<" (nb/GeV/Sr)"<<endl;
           pInteXs += pXs*deltaEprime*dOmega*pAcc;
         }
         
@@ -615,7 +615,7 @@ double GetInteXS_old(double pBeamE, double pAngle, double pMomentum, double Z, i
         if(ElasOnly!=1 && ElasOnly!=31) {
           pXs = 0.0;
           if(pQ2 < 11.0) pXs = GetXS(Z, N, pBeamE, pEprime, pTheta, Tb, Ta, 0);
-          if(DEBUG>=4) cout<<" Xbj = "<< pXbj<<"  Q2 = "<<pQ2<<"  PBosted::GetXS() = "<<pXs*1.0E3<<" (nb/GeV/Sr)"<<endl;
+          if(DEBUG>=4) cout<<" Xbj = "<< pXbj<<"  Q2 = "<<pQ2<<"  XEM::GetXS() = "<<pXs*1.0E3<<" (nb/GeV/Sr)"<<endl;
           pInteXs += pXs*deltaEprime*dOmega*pAcc;
         }
         
