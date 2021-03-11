@@ -233,13 +233,13 @@ void SHMSXSTree::Run(int nevents_to_process)
     //I do not use p and theta because the resolution will sometimes make p>Beam
     //xs_1h,xs_3he,xs_4he,xs_12c,xs_14n,xs_27al,xs_ge180;
     if(mTreeLevel<2 && istop==0) {
-      xs_1h  = GetXS(1,0,mBeam,p0,theta0,0.0,0.0);
-      xs_3he = GetXS(2,1,mBeam,p0,theta0,0.0,0.0);
+      //xs_1h  = GetXS(1,0,mBeam,p0,theta0,0.0,0.0);
+      //xs_3he = GetXS(2,1,mBeam,p0,theta0,0.0,0.0);
       xs_4he = GetXS(2,2,mBeam,p0,theta0,0.0,0.0);
-      xs_12c = GetXS(6,6,mBeam,p0,theta0,0.0,0.0);
-      xs_14n = GetXS(7,7,mBeam,p0,theta0,0.0,0.0);
-      xs_27al = GetXS(13,14,mBeam,p0,theta0,0.0,0.0);
-      xs_ge180 = GetXS_GE180(mBeam,p0,theta0,0.0,0.0);
+      //xs_12c = GetXS(6,6,mBeam,p0,theta0,0.0,0.0);
+      //xs_14n = GetXS(7,7,mBeam,p0,theta0,0.0,0.0);
+      //xs_27al = GetXS(13,14,mBeam,p0,theta0,0.0,0.0);
+      //xs_ge180 = GetXS_GE180(mBeam,p0,theta0,0.0,0.0);
       xs_4he_pi = WISER::GetXS(-211,2,2,mBeam,p0,theta0,0.067); //first have cross section per nucleon in mb/GeV/Sr
       xs_4he_pi *= (1000.0); //convert to ub/GeV/Sr
       xs_4he_pi *= 3.03; //convert to cross section per nuclei (A**0.8), A = 4
